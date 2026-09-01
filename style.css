@@ -306,6 +306,16 @@ position: relative;
 }/* INDIVIDUAL BRAND IDENTITIES */
 
 /* MJPHOTOGRAPHY */
+.mj-image {
+  background: #050505;
+}
+
+.mj-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 .brand-mj {
   border-top: 5px solid #226160;
 }
