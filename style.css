@@ -290,6 +290,73 @@ a {
 
 .brand-card:hover .brand-link b {
   transform: translateX(5px);
+}/* INDIVIDUAL BRAND IDENTITIES */
+
+/* MJPHOTOGRAPHY */
+.brand-mj {
+  border-top: 5px solid #226160;
+}
+
+.brand-mj .brand-content {
+  background: #fff5e1;
+}
+
+.brand-mj .card-number {
+  color: #cb6800;
+}
+
+.brand-mj .brand-content h3 {
+  color: #050505;
+}
+
+.brand-mj .brand-link {
+  color: #226160;
+}
+
+
+/* BEAUTY AWAITS PHOTOGRAPHY */
+.brand-beauty {
+  border-top: 5px solid #678d00;
+}
+
+.brand-beauty .brand-content {
+  background: #fff5e0;
+}
+
+.brand-beauty .card-number {
+  color: #cb6800;
+}
+
+.brand-beauty .brand-content h3 {
+  color: #2a647b;
+  font-family: "Arapey", Georgia, serif;
+  font-style: italic;
+}
+
+.brand-beauty .brand-link {
+  color: #678d00;
+}
+
+
+/* FINE ART */
+.brand-art {
+  border-top: 5px solid #a01e00;
+}
+
+.brand-art .brand-content {
+  background: #fff5e1;
+}
+
+.brand-art .card-number {
+  color: #cb6800;
+}
+
+.brand-art .brand-content h3 {
+  color: #050505;
+}
+
+.brand-art .brand-link {
+  color: #a01e00;
 }
 
 /* CLOSING */
