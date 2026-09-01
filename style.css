@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 :root {
-  --cream: #f7f1e7;
-  --cream-dark: #eee3d3;
-  --ink: #182426;
-  --teal: #315d66;
-  --teal-dark: #21434a;
-  --peach: #c98255;
-  --gold: #c98a45;
-  --white: #fffdf8;
-  --shadow: 0 18px 55px rgba(24, 36, 38, .12);
+  --cream: #fff5e1;
+  --cream-dark: #fff5e1;
+  --ink: #050505;
+  --teal: #226160;
+  --teal-dark: #226160;
+  --peach: #cb6800;
+  --gold: #a01e00;
+  --white: #fff5e1;
+  --shadow: 0 18px 55px rgba(5, 5, 5, .12);
 }
 
 * { box-sizing: border-box; }
