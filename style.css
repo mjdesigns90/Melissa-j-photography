@@ -131,7 +131,7 @@ a {
 
 .intro h2,
 .closing h2 {
-  font-family: "Playfair Display", Georgia, serif
+  font-family: "Playfair Display", Georgia, serif;
   font-weight: 500;
   font-size: clamp(2.8rem, 6vw, 4.8rem);
   line-height: .95;
@@ -148,7 +148,7 @@ a {
   max-width: 570px;
   margin: 28px auto 0;
   line-height: 1.85;
-  color: #536064;
+  color: #625e58;
 }
 
 /* BRAND CARDS */
@@ -183,7 +183,7 @@ a {
 }
 
 .logo-image {
-  background: #141c1e;
+  background: #050505;
 }
 
 .logo-image img {
@@ -193,7 +193,7 @@ a {
 }
 
 .beauty-image {
-  background: #f7f1e7;
+  background: #fff5e0;
   padding: 22px;
 }
 
@@ -267,7 +267,7 @@ a {
 }
 
 .brand-content p:not(.card-number) {
-  color: #596568;
+  color: #625e58;
   font-size: .91rem;
   line-height: 1.75;
   margin: 0;
@@ -312,7 +312,7 @@ a {
 }
 
 .closing > p:last-child {
-  color: #687477;
+  color: #625e58;
   margin: 25px auto 0;
   line-height: 1.8;
 }
@@ -333,7 +333,7 @@ footer {
 
 .footer-location {
   margin-top: 7px;
-  color: #aebcbd;
+  color: #fff5e1;
   font-size: .75rem;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -348,7 +348,7 @@ footer {
 }
 
 .footer-links a {
-  color: #e8d5c5;
+  color: #fff5e1;
   font-size: .8rem;
 }
 
@@ -357,7 +357,7 @@ footer {
 }
 
 .copyright {
-  color: #718184;
+  color: #fff5e1;
   font-size: .67rem;
   letter-spacing: .08em;
 }
