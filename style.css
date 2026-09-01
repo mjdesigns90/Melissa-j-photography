@@ -80,7 +80,7 @@ a {
 
 .hero h1 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(4.1rem, 11vw, 8.8rem);
   line-height: .78;
   font-weight: 500;
@@ -131,7 +131,7 @@ a {
 
 .intro h2,
 .closing h2 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", Georgia, serif
   font-weight: 500;
   font-size: clamp(2.8rem, 6vw, 4.8rem);
   line-height: .95;
@@ -223,7 +223,7 @@ a {
 
 .placeholder-mark {
   position: relative;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: 5rem;
   font-style: italic;
   opacity: .9;
@@ -259,7 +259,7 @@ a {
 }
 
 .brand-content h3 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: 2.25rem;
   line-height: .95;
   margin: 0 0 16px;
@@ -326,7 +326,7 @@ footer {
 }
 
 .footer-name {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", Georgia, serif;
   font-size: 2rem;
   font-style: italic;
 }
