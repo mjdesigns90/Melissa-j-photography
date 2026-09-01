@@ -255,7 +255,7 @@ a {
 }
 
 .brand-content {
- padding: 28px 28px 32px;
+padding: 55px 50px;
   justify-content: center;
 position: relative;
   display: flex;
@@ -308,13 +308,18 @@ position: relative;
 /* MJPHOTOGRAPHY */
 .mj-image {
   background: #050505;
+  position: relative;
+  min-height: 460px;
 }
 
 .mj-image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
+  display: block;
 }
 .brand-mj {
   border-top: 5px solid #226160;
