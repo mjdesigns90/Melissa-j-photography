@@ -45,7 +45,7 @@ a {
   color: var(--white);
   background:
     linear-gradient(rgba(18, 28, 30, .30), rgba(18, 28, 30, .72)),
-    url("images/mjphotography-logo.png") center / cover no-repeat;
+    url("images/hero.jpg") center / cover no-repeat;
   isolation: isolate;
 }
 
