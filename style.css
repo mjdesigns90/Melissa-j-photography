@@ -166,7 +166,7 @@ a {
   box-shadow: var(--shadow);
   display: grid;
   grid-template-columns: 1.15fr .85fr;
-  min-height: 460px;
+  min-height: 400px;
   transition: transform .35s ease, box-shadow .35s ease;
 }
 .brand-card:nth-child(even) {
@@ -187,7 +187,7 @@ a {
 }
 
 .brand-image {
-  min-height: 460px;
+  min-height: 400px;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -206,7 +206,7 @@ a {
 .beauty-image {
   background: #fff5e0;
   position: relative;
-  min-height: 460px;
+  min-height: 400px;
   padding: 0;
 }
 
@@ -315,7 +315,7 @@ position: relative;
 .mj-image {
   background: #050505;
   position: relative;
-  min-height: 460px;
+  min-height: 400px;
 }
 
 .mj-image img {
@@ -502,7 +502,7 @@ footer {
 
 .brand-image {
   min-height: 0;
-  height: 320px;
+  height: 260px;
 }
 
 .brand-content {
