@@ -501,7 +501,8 @@ footer {
 }
 
 .brand-image {
-  min-height: 330px;
+  min-height: 0;
+  height: 320px;
 }
 
 .brand-content {
@@ -527,9 +528,10 @@ footer {
     width: min(100% - 28px, 650px);
   }
 
-  .brand-image {
-    height: 275px;
-  }
+ .brand-image {
+  min-height: 0;
+  height: 260px;
+}
 
   .brand-content {
     padding: 25px 23px 29px;
