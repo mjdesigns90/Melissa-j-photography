@@ -102,11 +102,13 @@ a {
   position: relative;
   z-index: 2;
 
-  width: min(1100px, 100%);
+  width: min(520px, 42vw);
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+
+  text-align: left;
 }
 
 
@@ -187,29 +189,43 @@ a {
 @media (max-width: 600px) {
 
   .hero {
-    min-height: 620px;
-    padding: 70px 18px 85px;
+    min-height: 430px;
+
+    justify-content: center;
+
+    padding: 40px 22px 60px;
+
+    text-align: center;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 5, 5, .08) 0%,
+        rgba(5, 5, 5, .28) 55%,
+        rgba(5, 5, 5, .62) 100%
+      ),
+      url("images/hero.jpg") center / cover no-repeat;
+  }
+
+  .hero-branding {
+    width: min(500px, 92vw);
+    align-items: center;
+    text-align: center;
   }
 
   .hero-logo {
-    width: min(92vw, 500px);
+    width: min(430px, 90vw);
   }
 
   .hero-services {
-    margin-top: 20px;
+    margin-top: 18px;
 
-    font-size: .88rem;
-    line-height: 1.8;
+    max-width: 94%;
 
-    max-width: 95%;
-  }
+    font-size: .76rem;
+    line-height: 1.7;
 
-  .hero-services br {
-    display: none;
-  }
-
-  .hero-services span {
-    margin: 0 .2em;
+    text-align: center;
   }
 
 }
