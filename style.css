@@ -669,3 +669,163 @@ footer {
   }
 
 }
+/* =========================================
+   FINAL HERO OVERRIDES
+   ========================================= */
+
+.hero {
+  min-height: 42vh !important;
+  position: relative;
+
+  display: flex;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  padding: 46px 6vw 62px !important;
+
+  text-align: left !important;
+  color: #fff5e1 !important;
+
+  background:
+    url("images/hero.jpg")
+    center center / cover no-repeat !important;
+
+  overflow: hidden;
+}
+
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, .58) 0%,
+      rgba(5, 5, 5, .30) 34%,
+      rgba(5, 5, 5, .08) 68%,
+      rgba(5, 5, 5, 0) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+.hero-branding {
+  position: relative;
+  z-index: 2;
+
+  width: min(470px, 40vw) !important;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start !important;
+  text-align: left !important;
+
+  margin: 0 !important;
+}
+
+
+.hero-location {
+  margin: 0 0 14px !important;
+
+  font-family: "Arapey", Georgia, serif !important;
+  font-size: .78rem !important;
+  font-weight: 400 !important;
+
+  letter-spacing: .26em !important;
+
+  color: #fff5e1 !important;
+}
+
+
+.hero-logo {
+  width: min(420px, 100%) !important;
+  height: auto;
+
+  display: block;
+}
+
+
+.hero-tagline {
+  margin: 20px 0 0 !important;
+
+  max-width: 430px;
+
+  font-family: "Arapey", Georgia, serif !important;
+
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem) !important;
+  font-weight: 400 !important;
+
+  line-height: 1.4 !important;
+  letter-spacing: .04em !important;
+
+  color: #fff5e1 !important;
+}
+
+
+.scroll-hint {
+  color: #fff5e1 !important;
+}
+
+
+/* FINAL MOBILE HERO */
+
+@media (max-width: 600px) {
+
+  .hero {
+    min-height: 390px !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 38px 22px 55px !important;
+
+    text-align: center !important;
+
+    background-position: center center !important;
+  }
+
+
+  .hero-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 5, 5, .10) 0%,
+        rgba(5, 5, 5, .26) 45%,
+        rgba(5, 5, 5, .60) 100%
+      );
+  }
+
+
+  .hero-branding {
+    width: min(430px, 90vw) !important;
+
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+
+  .hero-location {
+    font-size: .66rem !important;
+    letter-spacing: .20em !important;
+  }
+
+
+  .hero-logo {
+    width: min(340px, 82vw) !important;
+  }
+
+
+  .hero-tagline {
+    max-width: 330px;
+
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+
+    text-align: center !important;
+  }
+
+}
