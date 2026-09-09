@@ -57,25 +57,25 @@ a {
 /* HERO */
 
 .hero {
-  min-height: 78vh;
+  min-height: 52vh;
   position: relative;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
-  text-align: center;
+  text-align: left;
 
-  padding: 70px 24px 100px;
+  padding: 50px 7vw 70px;
 
   color: var(--white);
 
   background:
     linear-gradient(
-      180deg,
-      rgba(5, 5, 5, .08) 0%,
-      rgba(5, 5, 5, .16) 42%,
-      rgba(5, 5, 5, .68) 100%
+      90deg,
+      rgba(5, 5, 5, .62) 0%,
+      rgba(5, 5, 5, .28) 38%,
+      rgba(5, 5, 5, .04) 70%
     ),
     url("images/hero.jpg") center / cover no-repeat;
 
