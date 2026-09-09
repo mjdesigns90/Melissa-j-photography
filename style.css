@@ -59,91 +59,111 @@ a {
 .hero {
   min-height: 78vh;
   position: relative;
+
   display: flex;
   align-items: center;
-  padding: 90px max(7vw, 28px);
-  color: var(--cream);
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 70px 24px 100px;
+
+  color: var(--white);
 
   background:
-    url("images/hero.jpg")
-    center center / cover no-repeat;
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, .08) 0%,
+      rgba(5, 5, 5, .16) 42%,
+      rgba(5, 5, 5, .68) 100%
+    ),
+    url("images/hero.jpg") center / cover no-repeat;
+
+  isolation: isolate;
 }
 
 
-/*
-When you get your glorious Florida farm sunrise photo,
-just upload it as:
-
-images/hero.jpg
-
-and you won't have to change any code.
-*/
-
-
-.hero-overlay {
+.hero-glow {
   position: absolute;
   inset: 0;
 
   background:
-    linear-gradient(
-      90deg,
-      rgba(5, 5, 5, .72) 0%,
-      rgba(5, 5, 5, .48) 38%,
-      rgba(5, 5, 5, .10) 75%
+    radial-gradient(
+      circle at 25% 45%,
+      rgba(203, 104, 0, .12),
+      transparent 38%
     );
+
+  pointer-events: none;
 }
 
 
-.hero-content {
+.hero-branding {
   position: relative;
   z-index: 2;
-  width: min(680px, 100%);
+
+  width: min(1100px, 100%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
-.hero-eyebrow {
-  color: var(--cream);
-  opacity: .92;
+.hero-logo {
+  width: min(620px, 68vw);
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 4px 8px rgba(0, 0, 0, .22))
+    drop-shadow(0 10px 30px rgba(0, 0, 0, .18));
 }
 
 
-.hero h1 {
-  margin: 0;
+.hero-services {
+  margin: 24px 0 0;
+
+  max-width: 1050px;
+
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(4.4rem, 9vw, 8.3rem);
-  line-height: .78;
-  font-weight: 500;
-  letter-spacing: -.045em;
+  font-size: clamp(.95rem, 2vw, 1.55rem);
+
+  line-height: 1.65;
+
+  letter-spacing: .015em;
+
+  text-transform: uppercase;
+
+  text-shadow: 0 3px 14px rgba(0, 0, 0, .65);
 }
 
 
-.hero h1 span {
-  display: block;
-  margin-top: .23em;
-  font-size: .68em;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -.025em;
-}
+.hero-services span {
+  color: #e0aa20;
 
+  margin: 0 .32em;
 
-.hero-copy {
-  margin: 42px 0 0;
-  max-width: 570px;
-
-  font-size: clamp(1.1rem, 2vw, 1.45rem);
-  line-height: 1.45;
-  letter-spacing: .06em;
+  text-shadow:
+    0 0 8px rgba(224, 170, 32, .45);
 }
 
 
 .scroll-hint {
   position: absolute;
-  z-index: 2;
+
   left: 50%;
-  bottom: 24px;
+  bottom: 28px;
+
+  z-index: 2;
+
   transform: translateX(-50%);
-  font-size: 2rem;
+
+  font-size: 1.7rem;
+
+  color: var(--white);
+
   animation: float 2.2s ease-in-out infinite;
 }
 
@@ -156,11 +176,43 @@ and you won't have to change any code.
   }
 
   50% {
-    transform: translate(-50%, 7px);
+    transform: translate(-50%, 8px);
   }
+
 }
 
 
+/* MOBILE HERO */
+
+@media (max-width: 600px) {
+
+  .hero {
+    min-height: 620px;
+    padding: 70px 18px 85px;
+  }
+
+  .hero-logo {
+    width: min(92vw, 500px);
+  }
+
+  .hero-services {
+    margin-top: 20px;
+
+    font-size: .88rem;
+    line-height: 1.8;
+
+    max-width: 95%;
+  }
+
+  .hero-services br {
+    display: none;
+  }
+
+  .hero-services span {
+    margin: 0 .2em;
+  }
+
+}
 /* INTRO */
 
 .intro {
