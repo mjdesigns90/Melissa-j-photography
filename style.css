@@ -66,7 +66,7 @@ a {
 
   text-align: left;
 
-  padding: 50px 7vw 70px;
+  padding: 50px 3vw 70px;
 
   color: var(--white);
 
@@ -102,7 +102,7 @@ a {
   position: relative;
   z-index: 2;
 
-  width: min(520px, 42vw);
+width: min(620px, 48vw);
 
   display: flex;
   flex-direction: column;
@@ -128,8 +128,8 @@ a {
 
 
 .hero-services {
-  color: #fff5e1;
-  
+  color: #fff5e1 !important;
+
   margin: 24px 0 0;
 
   max-width: 1050px;
