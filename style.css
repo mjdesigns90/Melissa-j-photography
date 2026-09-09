@@ -106,9 +106,12 @@ a {
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 
-  text-align: left;
+  text-align: center;
+
+  margin-left: 0;
+  margin-right: auto;
 }
 
 
@@ -125,6 +128,8 @@ a {
 
 
 .hero-services {
+  color: #fff5e1;
+  
   margin: 24px 0 0;
 
   max-width: 1050px;
