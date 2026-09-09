@@ -348,27 +348,81 @@ position: relative;
 }
 
 
-/* BEAUTY AWAITS PHOTOGRAPHY */
-.brand-beauty {
-  border-top: 5px solid #678d00;
+/* PORTRAITS */
+.brand-portraits {
+  border-top: 5px solid #cb6800;
 }
 
-.brand-beauty .brand-content {
-  background: #fff5e0;
+.brand-portraits .brand-content {
+  background: #fff5e1;
 }
 
-.brand-beauty .card-number {
+.brand-portraits .card-number {
   color: #cb6800;
 }
 
-.brand-beauty .brand-content h3 {
-  color: #2a647b;
-  font-family: "Arapey", Georgia, serif;
-  font-style: italic;
+.brand-portraits .brand-content h3 {
+  color: #226160;
 }
 
-.brand-beauty .brand-link {
-  color: #678d00;
+.brand-portraits .brand-link {
+  color: #226160;
+}
+
+.portrait-image {
+  background: #fff5e1;
+  position: relative;
+  min-height: 400px;
+  padding: 0;
+}
+
+.portrait-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+
+/* EVENT GALLERIES */
+.brand-events {
+  border-top: 5px solid #226160;
+}
+
+.brand-events .brand-content {
+  background: #fff5e1;
+}
+
+.brand-events .card-number {
+  color: #cb6800;
+}
+
+.brand-events .brand-content h3 {
+  color: #050505;
+}
+
+.brand-events .brand-link {
+  color: #226160;
+}
+
+.event-image {
+  background: #050505;
+  position: relative;
+  min-height: 400px;
+  padding: 0;
+}
+
+.event-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
 }
 
 
