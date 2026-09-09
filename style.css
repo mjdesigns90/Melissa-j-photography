@@ -109,14 +109,13 @@ a {
   pointer-events: none;
 }
 
-
 /* BRANDING GROUP */
 
 .hero-branding {
   position: relative;
   z-index: 2;
 
-  width: min(540px, 42vw);
+  width: min(620px, 46vw);
 
   display: flex;
   flex-direction: column;
@@ -129,15 +128,15 @@ a {
 /* OCALA • CENTRAL FLORIDA */
 
 .hero-location {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 
   color: var(--white);
 
   font-family: "Arapey", Georgia, serif;
-  font-size: .8rem;
+  font-size: .82rem;
   font-weight: 400;
 
-  letter-spacing: .26em;
+  letter-spacing: .30em;
   text-transform: uppercase;
 }
 
@@ -147,7 +146,7 @@ a {
 .hero-logo {
   display: block;
 
-  width: min(470px, 100%);
+  width: min(520px, 100%);
   height: auto;
 
   filter:
@@ -159,17 +158,17 @@ a {
 /* TAGLINE */
 
 .hero-tagline {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
 
-  max-width: 480px;
+  max-width: 560px;
 
   color: var(--white);
 
   font-family: "Arapey", Georgia, serif;
-  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  font-size: clamp(1.25rem, 1.65vw, 1.6rem);
   font-weight: 400;
 
-  line-height: 1.4;
+  line-height: 1.35;
   letter-spacing: .045em;
 }
 
