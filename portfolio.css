@@ -1,0 +1,870 @@
+/* ========================================
+   MJPHOTOGRAPHY PORTFOLIO
+======================================== */
+
+:root {
+  --cream: #fff5e1;
+  --ink: #050505;
+  --teal: #226160;
+  --orange: #cb6800;
+  --red: #a01e00;
+  --gray: #625e58;
+  --white: #fff5e1;
+
+  --shadow:
+    0 18px 55px rgba(5, 5, 5, .08);
+}
+
+
+/* ========================================
+   RESET
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background: var(--cream);
+  color: var(--ink);
+
+  font-family: "Arapey", Georgia, serif;
+}
+
+img {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+
+  text-decoration: none;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.site-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 5vw;
+
+  background: var(--teal);
+}
+
+.logo-link {
+  display: block;
+
+  width: 220px;
+}
+
+.header-logo {
+  width: 100%;
+  height: auto;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+}
+
+.top-nav a {
+  position: relative;
+
+  color: var(--cream);
+
+  font-size: .72rem;
+
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.top-nav a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+
+  width: 0;
+  height: 1px;
+
+  background: var(--orange);
+
+  transition: width .25s ease;
+}
+
+.top-nav a:hover::after {
+  width: 100%;
+}
+
+
+/* ========================================
+   SHARED TEXT
+======================================== */
+
+.eyebrow,
+.section-number {
+  margin: 0;
+
+  color: var(--orange);
+
+  font-size: .68rem;
+  line-height: 1.4;
+
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+
+/* ========================================
+   INTRO
+======================================== */
+
+.portfolio-intro {
+  width: min(900px, calc(100% - 50px));
+
+  margin: 0 auto;
+
+  padding: 95px 0 70px;
+
+  text-align: center;
+}
+
+.portfolio-intro .eyebrow {
+  margin-bottom: 22px;
+}
+
+.portfolio-intro h1 {
+  margin: 0;
+
+  color: var(--teal);
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(3.8rem, 7vw, 7rem);
+  font-weight: 400;
+
+  line-height: .92;
+  letter-spacing: -.045em;
+}
+
+.portfolio-intro h1 em {
+  display: block;
+
+  margin-top: 8px;
+
+  color: var(--ink);
+
+  font-weight: 400;
+}
+
+.intro-copy {
+  width: min(650px, 100%);
+
+  margin: 32px auto 0;
+
+  color: var(--gray);
+
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   CATEGORY NAVIGATION
+======================================== */
+
+.category-nav {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto 90px;
+
+  padding: 20px 0;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 12px 34px;
+
+  border-top:
+    1px solid rgba(34, 97, 96, .24);
+
+  border-bottom:
+    1px solid rgba(34, 97, 96, .24);
+}
+
+.category-nav a {
+  color: var(--teal);
+
+  font-size: .7rem;
+
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.category-nav a:hover {
+  color: var(--orange);
+}
+
+
+/* ========================================
+   PORTFOLIO SECTIONS
+======================================== */
+
+.portfolio-section {
+  width: min(1240px, calc(100% - 44px));
+
+  margin: 0 auto;
+
+  padding: 0 0 120px;
+}
+
+.section-heading {
+  width: min(720px, 100%);
+
+  margin-bottom: 38px;
+}
+
+.section-number {
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: var(--teal);
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(3rem, 5.2vw, 5.6rem);
+  font-weight: 400;
+
+  line-height: .95;
+  letter-spacing: -.035em;
+}
+
+.section-heading h2 em {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--ink);
+
+  font-weight: 400;
+}
+
+.section-heading > p:last-child {
+  width: min(560px, 100%);
+
+  margin: 24px 0 0;
+
+  color: var(--gray);
+
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+
+
+/* ========================================
+   GALLERY
+======================================== */
+
+.gallery {
+  display: grid;
+
+  grid-template-columns:
+    repeat(12, 1fr);
+
+  gap: 10px;
+}
+
+.photo {
+  grid-column: span 4;
+
+  overflow: hidden;
+
+  background:
+    rgba(255, 255, 255, .34);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+
+  aspect-ratio: 4 / 5;
+
+  object-fit: cover;
+
+  transition:
+    transform .55s ease;
+}
+
+.photo:hover img {
+  transform: scale(1.018);
+}
+
+
+/* WIDE FEATURE IMAGE */
+
+.photo-wide {
+  grid-column: span 8;
+}
+
+.photo-wide img {
+  aspect-ratio: 3 / 2;
+}
+
+
+/* TALL IMAGE */
+
+.photo-tall {
+  grid-column: span 4;
+}
+
+.photo-tall img {
+  aspect-ratio: 3 / 4;
+}
+
+
+/* FULL WIDTH IMAGE */
+
+.photo-full {
+  grid-column: 1 / -1;
+}
+
+.photo-full img {
+  aspect-ratio: 16 / 8;
+}
+
+
+/* ========================================
+   OPTIONAL EDITORIAL GALLERY PATTERN
+======================================== */
+
+/*
+Use these classes later when adding images:
+
+<figure class="photo"></figure>
+
+<figure class="photo photo-wide"></figure>
+
+<figure class="photo photo-tall"></figure>
+
+<figure class="photo photo-full"></figure>
+
+This lets us build the gallery around the actual
+orientation of your photographs rather than forcing
+everything into identical boxes.
+*/
+
+
+/* ========================================
+   FINE ART
+======================================== */
+
+.fine-art-section {
+  padding-top: 10px;
+}
+
+.fine-art-section .section-heading h2 {
+  color: var(--red);
+}
+
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+.portfolio-button {
+  display: inline-block;
+
+  margin-top: 34px;
+
+  padding: 15px 21px;
+
+  border:
+    1px solid var(--teal);
+
+  color: var(--teal);
+
+  font-size: .72rem;
+
+  letter-spacing: .14em;
+  text-transform: uppercase;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+}
+
+.portfolio-button:hover {
+  background: var(--teal);
+  color: var(--cream);
+}
+
+
+/* ========================================
+   CTA
+======================================== */
+
+.portfolio-cta {
+  width: min(950px, calc(100% - 44px));
+
+  margin: 0 auto;
+
+  padding: 30px 0 110px;
+
+  text-align: center;
+}
+
+.cta-line {
+  width: 70px;
+  height: 2px;
+
+  margin: 0 auto 35px;
+
+  background: var(--orange);
+}
+
+.portfolio-cta .eyebrow {
+  margin-bottom: 18px;
+}
+
+.portfolio-cta h2 {
+  margin: 0 auto;
+
+  color: var(--teal);
+
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(3.4rem, 6vw, 6rem);
+  font-weight: 400;
+
+  line-height: .94;
+  letter-spacing: -.04em;
+}
+
+.portfolio-cta h2 em {
+  display: block;
+
+  margin-top: 6px;
+
+  color: var(--ink);
+
+  font-weight: 400;
+}
+
+.portfolio-cta > p {
+  margin: 25px auto 0;
+
+  color: var(--gray);
+
+  font-size: 1.04rem;
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+  padding: 48px 24px 26px;
+
+  background: var(--teal);
+
+  color: var(--cream);
+
+  text-align: center;
+}
+
+.footer-logo-link {
+  display: block;
+
+  width: 220px;
+
+  margin: 0 auto 18px;
+}
+
+.footer-logo {
+  width: 100%;
+}
+
+footer > p {
+  margin: 0;
+
+  font-size: .62rem;
+  line-height: 1.5;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  margin: 28px auto 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0;
+}
+
+.footer-links a {
+  padding: 0 18px;
+
+  border-left:
+    1px solid rgba(255, 245, 225, .25);
+
+  font-size: .68rem;
+
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.footer-links a:first-child {
+  border-left: 0;
+}
+
+.footer-links a:hover {
+  color: var(--orange);
+}
+
+.copyright {
+  margin-top: 32px;
+
+  opacity: .7;
+
+  font-size: .54rem;
+
+  letter-spacing: .12em;
+}
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 900px) {
+
+  .site-header {
+    padding:
+      18px
+      28px;
+  }
+
+  .logo-link {
+    width: 185px;
+  }
+
+  .portfolio-intro {
+    padding:
+      78px
+      0
+      60px;
+  }
+
+  .portfolio-section {
+    padding-bottom: 95px;
+  }
+
+  .photo {
+    grid-column: span 6;
+  }
+
+  .photo-wide {
+    grid-column: 1 / -1;
+  }
+
+  .photo-tall {
+    grid-column: span 6;
+  }
+
+  .photo-full {
+    grid-column: 1 / -1;
+  }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+
+  /* HEADER */
+
+  .site-header {
+    flex-direction: column;
+
+    gap: 16px;
+
+    padding:
+      18px
+      20px
+      16px;
+  }
+
+  .logo-link {
+    width: 205px;
+  }
+
+  .top-nav {
+    width: 100%;
+
+    justify-content: center;
+
+    gap: 18px;
+  }
+
+  .top-nav a {
+    font-size: .56rem;
+
+    letter-spacing: .12em;
+  }
+
+
+  /* INTRO */
+
+  .portfolio-intro {
+    width: calc(100% - 36px);
+
+    padding:
+      58px
+      0
+      48px;
+  }
+
+  .portfolio-intro .eyebrow {
+    margin-bottom: 17px;
+
+    font-size: .59rem;
+
+    letter-spacing: .18em;
+  }
+
+  .portfolio-intro h1 {
+    font-size: 3.05rem;
+    line-height: 1;
+  }
+
+  .portfolio-intro h1 em {
+    margin-top: 5px;
+  }
+
+  .intro-copy {
+    width: min(340px, 100%);
+
+    margin-top: 25px;
+
+    font-size: .98rem;
+    line-height: 1.65;
+  }
+
+
+  /* CATEGORY NAV */
+
+  .category-nav {
+    width: calc(100% - 34px);
+
+    margin-bottom: 65px;
+
+    padding:
+      18px
+      4px;
+
+    gap:
+      14px
+      21px;
+  }
+
+  .category-nav a {
+    font-size: .6rem;
+
+    letter-spacing: .14em;
+  }
+
+
+  /* SECTIONS */
+
+  .portfolio-section {
+    width: calc(100% - 28px);
+
+    padding-bottom: 82px;
+  }
+
+  .section-heading {
+    margin-bottom: 29px;
+
+    padding:
+      0
+      4px;
+  }
+
+  .section-number {
+    margin-bottom: 12px;
+
+    font-size: .59rem;
+
+    letter-spacing: .18em;
+  }
+
+  .section-heading h2 {
+    font-size: 2.65rem;
+    line-height: 1.01;
+  }
+
+  .section-heading h2 em {
+    margin-top: 5px;
+  }
+
+  .section-heading > p:last-child {
+    width: min(335px, 100%);
+
+    margin-top: 21px;
+
+    font-size: .98rem;
+    line-height: 1.6;
+  }
+
+
+  /* GALLERY */
+
+  .gallery {
+    display: block;
+  }
+
+  .photo,
+  .photo-wide,
+  .photo-tall,
+  .photo-full {
+    width: 100%;
+
+    margin:
+      0
+      0
+      12px;
+  }
+
+  .photo img {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: auto;
+
+    object-fit: contain;
+  }
+
+
+  /* BUTTON */
+
+  .portfolio-button {
+    margin-top: 25px;
+
+    padding:
+      14px
+      17px;
+
+    font-size: .64rem;
+  }
+
+
+  /* CTA */
+
+  .portfolio-cta {
+    width: calc(100% - 36px);
+
+    padding:
+      20px
+      0
+      78px;
+  }
+
+  .cta-line {
+    margin-bottom: 27px;
+  }
+
+  .portfolio-cta .eyebrow {
+    margin-bottom: 17px;
+
+    font-size: .59rem;
+
+    letter-spacing: .18em;
+  }
+
+  .portfolio-cta h2 {
+    font-size: 2.75rem;
+    line-height: 1.02;
+  }
+
+  .portfolio-cta > p {
+    margin-top: 22px;
+
+    font-size: .98rem;
+  }
+
+
+  /* FOOTER */
+
+  footer {
+    padding:
+      38px
+      20px
+      24px;
+  }
+
+  .footer-logo-link {
+    width: 205px;
+  }
+
+  footer > p {
+    font-size: .56rem;
+
+    letter-spacing: .15em;
+  }
+
+  .footer-links {
+    flex-direction: column;
+
+    margin-top: 25px;
+  }
+
+  .footer-links a,
+  .footer-links a:first-child {
+    width: 100%;
+
+    padding:
+      12px
+      0;
+
+    border-left: 0;
+
+    border-top:
+      1px solid rgba(255, 245, 225, .22);
+  }
+
+  .copyright {
+    margin-top: 26px;
+
+    font-size: .5rem;
+  }
+
+}
