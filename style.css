@@ -702,16 +702,39 @@ footer {
     font-size: 1.35rem;
   }
 
-  .intro {
-    padding: 62px 0 42px;
+    .intro {
+    width: calc(100% - 40px);
+
+    padding: 55px 0 48px;
+  }
+
+  .intro .eyebrow {
+    margin-bottom: 18px;
+
+    font-size: .62rem;
+    line-height: 1.5;
+
+    letter-spacing: .20em;
   }
 
   .intro h2 {
-    font-size: 3rem;
+    font-size: 2.65rem;
+    line-height: 1.02;
+  }
+
+  .intro h2 em {
+    display: block;
+
+    margin-top: 5px;
   }
 
   .intro-copy {
-    font-size: .98rem;
+    width: min(350px, 100%);
+
+    margin: 26px auto 0;
+
+    font-size: 1rem;
+    line-height: 1.65;
   }
 
   .services,
@@ -736,12 +759,41 @@ footer {
     font-size: 2rem;
   }
 
-  .closing {
-    padding: 80px 0 60px;
+    .closing {
+    width: calc(100% - 40px);
+
+    padding: 75px 0 65px;
+  }
+
+  .closing-line {
+    margin-bottom: 24px;
+  }
+
+  .closing .eyebrow {
+    margin-bottom: 20px;
+
+    font-size: .62rem;
+    line-height: 1.5;
+
+    letter-spacing: .20em;
   }
 
   .closing h2 {
-    font-size: 3.2rem;
+    font-size: 2.7rem;
+    line-height: 1.02;
+  }
+
+  .closing h2 em {
+    display: block;
+
+    margin-top: 6px;
+  }
+
+  .closing > p:last-child {
+    margin-top: 25px;
+
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   footer {
