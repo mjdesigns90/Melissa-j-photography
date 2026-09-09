@@ -57,41 +57,37 @@ a {
 /* HERO */
 
 .hero {
-  min-height: 52vh;
+  min-height: 42vh;
   position: relative;
 
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
+  padding: 46px 7vw 62px;
+
+  color: #fff5e1;
   text-align: left;
 
-  padding: 50px 3vw 70px;
-
-  color: var(--white);
-
   background:
-    linear-gradient(
-      90deg,
-      rgba(5, 5, 5, .62) 0%,
-      rgba(5, 5, 5, .28) 38%,
-      rgba(5, 5, 5, .04) 70%
-    ),
-    url("images/hero.jpg") center / cover no-repeat;
+    url("images/hero.jpg")
+    center center / cover no-repeat;
 
-  isolation: isolate;
+  overflow: hidden;
 }
 
 
-.hero-glow {
+.hero-overlay {
   position: absolute;
   inset: 0;
 
   background:
-    radial-gradient(
-      circle at 25% 45%,
-      rgba(203, 104, 0, .12),
-      transparent 38%
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, .68) 0%,
+      rgba(5, 5, 5, .42) 34%,
+      rgba(5, 5, 5, .12) 68%,
+      rgba(5, 5, 5, .04) 100%
     );
 
   pointer-events: none;
@@ -102,74 +98,62 @@ a {
   position: relative;
   z-index: 2;
 
-width: min(620px, 48vw);
+  width: min(520px, 42vw);
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
 
-  text-align: center;
 
-  margin-left: 0;
-  margin-right: auto;
+.hero-location {
+  margin: 0 0 18px;
+
+  font-family: "Arapey", Georgia, serif;
+  font-size: .78rem;
+  letter-spacing: .28em;
+
+  color: #fff5e1;
 }
 
 
 .hero-logo {
-  width: min(620px, 68vw);
+  width: min(430px, 100%);
   height: auto;
 
-  object-fit: contain;
+  display: block;
 
   filter:
-    drop-shadow(0 4px 8px rgba(0, 0, 0, .22))
-    drop-shadow(0 10px 30px rgba(0, 0, 0, .18));
+    drop-shadow(0 3px 8px rgba(0, 0, 0, .25))
+    drop-shadow(0 8px 22px rgba(0, 0, 0, .18));
 }
 
 
-.hero-services {
-  color: #fff5e1 !important;
-
+.hero-tagline {
   margin: 24px 0 0;
 
-  max-width: 1050px;
+  max-width: 470px;
 
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(.95rem, 2vw, 1.55rem);
+  font-family: "Arapey", Georgia, serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  line-height: 1.45;
+  letter-spacing: .045em;
 
-  line-height: 1.65;
-
-  letter-spacing: .015em;
-
-  text-transform: uppercase;
-
-  text-shadow: 0 3px 14px rgba(0, 0, 0, .65);
-}
-
-
-.hero-services span {
-  color: #e0aa20;
-
-  margin: 0 .32em;
-
-  text-shadow:
-    0 0 8px rgba(224, 170, 32, .45);
+  color: #fff5e1;
 }
 
 
 .scroll-hint {
   position: absolute;
+  z-index: 2;
 
   left: 50%;
-  bottom: 28px;
-
-  z-index: 2;
+  bottom: 18px;
 
   transform: translateX(-50%);
 
-  font-size: 1.7rem;
-
-  color: var(--white);
+  color: #fff5e1;
+  font-size: 1.65rem;
 
   animation: float 2.2s ease-in-out infinite;
 }
@@ -183,7 +167,7 @@ width: min(620px, 48vw);
   }
 
   50% {
-    transform: translate(-50%, 8px);
+    transform: translate(-50%, 7px);
   }
 
 }
@@ -194,43 +178,56 @@ width: min(620px, 48vw);
 @media (max-width: 600px) {
 
   .hero {
-    min-height: 430px;
+    min-height: 390px;
 
     justify-content: center;
 
-    padding: 40px 22px 60px;
+    padding: 42px 22px 58px;
 
     text-align: center;
 
+    background-position: center center;
+  }
+
+
+  .hero-overlay {
     background:
       linear-gradient(
         180deg,
-        rgba(5, 5, 5, .08) 0%,
-        rgba(5, 5, 5, .28) 55%,
-        rgba(5, 5, 5, .62) 100%
-      ),
-      url("images/hero.jpg") center / cover no-repeat;
+        rgba(5, 5, 5, .12) 0%,
+        rgba(5, 5, 5, .30) 45%,
+        rgba(5, 5, 5, .66) 100%
+      );
   }
+
 
   .hero-branding {
-    width: min(500px, 92vw);
+    width: min(470px, 92vw);
+
     align-items: center;
-    text-align: center;
   }
+
+
+  .hero-location {
+    margin-bottom: 15px;
+
+    font-size: .68rem;
+    letter-spacing: .22em;
+  }
+
 
   .hero-logo {
-    width: min(430px, 90vw);
+    width: min(360px, 84vw);
   }
 
-  .hero-services {
-    margin-top: 18px;
 
-    max-width: 94%;
+  .hero-tagline {
+    margin-top: 20px;
 
-    font-size: .76rem;
-    line-height: 1.7;
+    max-width: 340px;
 
-    text-align: center;
+    font-size: 1rem;
+    line-height: 1.45;
   }
 
 }
