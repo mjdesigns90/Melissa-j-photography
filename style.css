@@ -45,6 +45,99 @@ a {
 }
 
 
+/* Homepage navigation */
+.site-nav {
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 3px solid var(--orange);
+}
+
+.site-nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 7.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.site-nav-brand {
+  font-size: 1.3rem;
+  white-space: nowrap;
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav-links a,
+.site-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.site-nav-links a:hover,
+.site-nav-links a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.site-nav-links .site-nav-book {
+  border-bottom: 3px solid transparent;
+}
+
+.site-nav-links .site-nav-book:hover,
+.site-nav-links .site-nav-book:focus-visible {
+  background: var(--cream);
+  color: var(--teal);
+  border-bottom-color: var(--orange);
+}
+
+.site-nav a:focus-visible,
+.site-nav-toggle:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 3px;
+}
+
+.site-nav-toggle {
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid currentColor;
+  font-family: inherit;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.site-nav-toggle[hidden] { display: none; }
+
+@media (max-width: 900px) {
+  .site-nav-inner { flex-wrap: wrap; padding: 10px 6vw; }
+  .site-nav-links { width: 100%; flex-direction: column; align-items: stretch; }
+  .site-nav-links a { display: flex; justify-content: flex-start; }
+  .site-nav.is-enhanced .site-nav-links { display: none; }
+  .site-nav.is-enhanced .site-nav-toggle { display: inline-flex; }
+  .site-nav.is-enhanced.is-open .site-nav-links { display: flex; }
+}
+
+@media (min-width: 901px) {
+  .site-nav-toggle { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 /* ========================================
    SHARED
 ======================================== */
@@ -70,8 +163,8 @@ a {
   position: relative;
 
   width: 100%;
-  height: clamp(350px, 30vw, 430px);
-  min-height: 0;
+  height: auto;
+  min-height: clamp(350px, 30vw, 430px);
 
   display: flex;
   align-items: center;
@@ -589,7 +682,7 @@ footer {
 @media (max-width: 900px) {
 
   .hero {
-    height: 390px;
+    min-height: 390px;
 
     padding-left: 5vw;
     padding-right: 5vw;
@@ -645,7 +738,6 @@ footer {
   /* HERO */
 
   .hero {
-    height: 340px;
     min-height: 340px;
 
     display: flex;
