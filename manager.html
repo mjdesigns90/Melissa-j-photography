@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Portfolio Manager · MJPhotography</title><link rel="stylesheet" href="manager.css"></head>
+<body><header><a href="index.html">MJPhotography</a><span>PORTFOLIO STUDIO</span><a href="portfolio.html">View original portfolio ↗</a></header>
+<main><p class="eyebrow">YOUR WORK, BEAUTIFULLY ARRANGED</p><h1>Portfolio Manager</h1>
+<p class="intro">Give every photograph its place. Arrange your galleries, then save when you’re ready.</p>
+<aside><strong>Local preview — only on this browser.</strong> Drafts are saved on this computer, without online backup or sign-in. Nothing here changes your website. Keep your original photo files.</aside>
+<div class="toolbar"><label>Gallery <select id="category"></select></label><label class="upload">Add photos <input id="upload" type="file" accept="image/jpeg,image/png,image/webp" multiple></label><button id="save" disabled>Save Draft</button><button id="preview" disabled>Preview draft</button><button disabled aria-describedby="publish-help">Publish</button></div>
+<p id="publish-help">Publishing is unavailable until secure sign-in and online storage are connected.</p>
+<p id="status" role="status" aria-live="polite">Loading your photographs…</p><button id="undo" hidden>Undo removal</button><div id="photos"></div>
+<section id="preview-panel" hidden><h2>Your draft preview</h2><p>Full photographs, in your existing portfolio design. This is not published.</p><iframe id="frame" title="Unpublished portfolio preview"></iframe></section>
+</main><script src="manager.js"></script></body></html>
