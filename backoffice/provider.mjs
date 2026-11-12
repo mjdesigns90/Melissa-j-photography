@@ -17,12 +17,18 @@ export async function preparePhoto(bytes){
 export function createProvider(config){
  const client=token=>createClient(config.supabaseUrl,config.key,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:{fetch:(input,init={})=>fetch(input,{...init,signal:AbortSignal.timeout(20000)}),...(token?{headers:{Authorization:'Bearer '+token}}:{})}});
  return {
-  async requestCode(email){check(await client().auth.signInWithOtp({email,options:{shouldCreateUser:false}}),'Unable to send a sign-in code. Please try later.');},
-  async verifyCode(email,token){
-   const result=await client().auth.verifyOtp({email,token,type:'email'});
-   if(result.error||!result.data.session)throw error('The sign-in code is invalid or expired.',401);
-   const s=result.data.session;
-   return {access:s.access_token,refresh:s.refresh_token,expires:s.expires_at*1000,userId:s.user.id};
+  async requestLink(email,redirectTo){
+   const memory=new Map();
+   const authClient=createClient(config.supabaseUrl,config.key,{auth:{flowType:'pkce',persistSession:true,autoRefreshToken:false,detectSessionInUrl:false,storage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)}},global:{fetch:(input,init={})=>fetch(input,{...init,signal:AbortSignal.timeout(20000)})}});
+   check(await authClient.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:redirectTo}}),'Unable to send a sign-in link. Please try later.');
+   return {finish:async code=>{
+    try{
+     const result=await authClient.auth.exchangeCodeForSession(code);
+     if(result.error||!result.data.session)throw error('The sign-in link is invalid or expired.',401);
+     const s=result.data.session;
+     return {access:s.access_token,refresh:s.refresh_token,expires:s.expires_at*1000,userId:s.user.id};
+    }finally{memory.clear();}
+   }};
   },
   async authenticate(session){
    if(session.expires<Date.now()+60_000){

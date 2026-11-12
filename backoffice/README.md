@@ -3,21 +3,26 @@
 ## Current status
 
 The Supabase project is connected and the private schema/storage migration has been
-applied and verified. The owner Auth account has not yet been created or linked;
+applied and verified. The sole owner Auth account is created and linked;
 **real email sign-in, cloud uploads and cloud saves are not active or tested yet**.
 The back-office website is not deployed. No photographs have been uploaded.
 The existing local editor at port 4173 and the public photography site remain unchanged.
 The new backend preview is http://127.0.0.1:4174/login.html while its local process runs.
 It displays a connection-pending notice and does not offer a fake sign-in button.
 
-The owner has confirmed the intended sign-in email. The next owner action is to add
-that account in Supabase Authentication, so its Auth UUID can be enrolled by the
-trusted admin connection. Configuration remains local and outside the repository.
+The owner account UUID is enrolled through the trusted admin connection. The next
+owner action is to configure the exact callback address in Supabase URL Configuration.
+Server configuration remains local and outside the repository.
 Do not send passwords, one-time codes or service-role keys into chat.
 
 ## Implemented behavior
 
-- Email one-time-code sign-in through Supabase Auth with shouldCreateUser=false.
+- Email sign-in links through Supabase Auth with shouldCreateUser=false and PKCE.
+  The PKCE verifier stays in a separate server-memory store per sign-in attempt.
+  A short-lived HttpOnly SameSite=Lax cookie binds the callback to the initiating browser;
+  callbacks expire after ten minutes and are single-use. The resulting session cookie
+  remains SameSite=Strict. Cross-site navigation is allowed only for the public sign-in
+  page and callback; private endpoints remain protected.
   No registration route exists. Access requires the configured auth UUID, plus the
   database owner allowlist; an email address alone does not authorize data access.
 - The backend verifies the Supabase user and database authorization on protected
@@ -54,10 +59,13 @@ Do not send passwords, one-time codes or service-role keys into chat.
 2. Create the owner's Auth user with the owner's confirmed email. Turn off public
    sign-ups. Confirm possession of that email during the first actual code sign-in.
    Record the Auth UUID as the owner ID; do not derive ownership from email claims.
-3. Configure email delivery and the Magic Link template to include {{ .Token }}
-   so the sign-in form can verify the email code. Test expiry and real delivery.
-   Supabase's default email service has recipient/rate restrictions; custom SMTP may
-   be needed before production. Never assume email delivery without testing it.
+3. Keep the default email sign-in link template. No template editing or custom SMTP
+   is required for the initial owner test. Set Site URL to the exact private app origin
+   and add that origin plus /auth/callback to the allowed redirect URLs. Test real
+   email delivery and open the latest link in the same browser that requested it.
+   Supabase default mail restricts recipients and rate limits; if the owner address
+   is not permitted, stop and choose a reviewed delivery setup. Do not claim delivery
+   until it succeeds.
 4. Review and apply supabase/001_private_portfolio.sql to the dedicated project.
    This is a one-time numbered migration, not a rerunnable setup script.
    Verify existing Storage policies before applying; a dedicated bucket/project
@@ -74,7 +82,7 @@ Do not send passwords, one-time codes or service-role keys into chat.
 
    SITE_ROOT normally points to the repository root (..). For this desktop output
    bundle, use SITE_ROOT=../../portfolio-manager-stage1.
-7. Validate real OTP login, unauthorized/other-user access directly against hosted
+7. Validate real email-link login, unauthorized/other-user access directly against hosted
    Supabase APIs, token refresh, logout/revocation, image upload, draft reload, expired
    sessions and multi-tab conflicts. Compare Storage bucket privacy and RLS grants.
    Confirm no private content is publicly retrievable.
@@ -94,7 +102,7 @@ the real private service is connected. Do not overwrite existing drafts during s
 
 Run: node --test test/*.test.mjs
 
-Seventeen tests passed locally, including the updated private-function wrappers:
+Twenty tests passed locally, including the updated private-function wrappers:
 
 - anonymous/forged sessions blocked from drafts, photos and private HTML;
 - owner UUID and database allowlist checks, revocation, logout and idle timeout;
@@ -107,7 +115,7 @@ Seventeen tests passed locally, including the updated private-function wrappers:
 
 The PostgreSQL tests are not hosted Supabase integration tests. Remote Auth, SMTP,
 Storage, RLS configuration and refresh-token behavior still require the actual account.
-The browser verified that requesting /manager.html without sign-in redirects to the
+The original pending-connection browser test verified that requesting /manager.html without sign-in redirects to the
 connection-pending sign-in page. No fake authenticated browser preview is exposed.
 
 Hosted verification after applying the migration: private bucket flag is false; all
@@ -134,3 +142,8 @@ use. No destructive cleanup is performed automatically.
 - [Row-level security](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [Storage access control](https://supabase.com/docs/guides/storage/security/access-control)
 - [Sharp output and metadata defaults](https://sharp.pixelplumbing.com/api-output/)
+
+The email-link adaptation also tests the official Supabase SDK with intercepted network
+responses: separate per-attempt PKCE challenges, server-only verifier storage, code
+exchange and redirect binding. These are protocol tests, not a real delivered-email
+sign-in. Hosted callback allowlisting and owner browser testing remain outstanding.

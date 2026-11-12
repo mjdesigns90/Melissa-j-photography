@@ -1,9 +1,20 @@
 'use strict';
-const status=document.getElementById('auth-status');
-const requestForm=document.getElementById('request-code'),verifyForm=document.getElementById('verify-code');
-async function call(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw Error(d.error||'Please try again.');return d;}
-function busy(form,value){form.querySelectorAll('button,input').forEach(n=>n.disabled=value);}
-requestForm.onsubmit=async e=>{e.preventDefault();busy(requestForm,true);try{await call('/api/auth/request',{email:document.getElementById('email').value});status.textContent='If this email is authorized, a sign-in code has been sent. Check your inbox.';requestForm.hidden=true;verifyForm.hidden=false;document.getElementById('code').focus();}catch(e){status.textContent=e.message;}finally{busy(requestForm,false);}};
-verifyForm.onsubmit=async e=>{e.preventDefault();busy(verifyForm,true);try{await call('/api/auth/verify',{email:document.getElementById('email').value,code:document.getElementById('code').value});document.getElementById('code').value='';location.replace('/manager.html');}catch(e){status.textContent=e.message;}finally{busy(verifyForm,false);}};
-document.getElementById('back').onclick=()=>{verifyForm.hidden=true;requestForm.hidden=false;document.getElementById('code').value='';status.textContent='Enter your authorized email.';};
-(async()=>{try{const r=await fetch('/api/session'),s=await r.json();if(s.authenticated){location.replace('/manager.html');return;}requestForm.hidden=!s.configured;status.textContent=s.configured?'Use your email to receive a one-time sign-in code.':'Private sign-in is not connected yet. Your Supabase project still needs to be connected. No photos have been uploaded.';}catch{status.textContent='Unable to reach the private server. Please try again.';}})();
+const status=document.getElementById('auth-status'),form=document.getElementById('request-link');
+function busy(value){form.querySelectorAll('button,input').forEach(n=>n.disabled=value);}
+form.onsubmit=async e=>{
+ e.preventDefault();busy(true);
+ try{
+  const r=await fetch('/api/auth/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('email').value})});
+  const data=await r.json();if(!r.ok)throw Error(data.error||'Please try again.');
+  status.textContent='If this email is authorized, a sign-in link has been sent. Check your inbox and open the link in this same browser.';
+  document.getElementById('email-help').hidden=false;
+ }catch(e){status.textContent=e.message;}finally{busy(false);}
+};
+(async()=>{
+ try{
+  const r=await fetch('/api/session'),s=await r.json();
+  if(s.authenticated){location.replace('/manager.html');return;}
+  form.hidden=!s.configured;
+  status.textContent=s.configured?'Sign in with a one-time email link.':'Private sign-in is not connected yet. Your Supabase project still needs to be connected. No photos have been uploaded.';
+ }catch{status.textContent='Unable to reach the private server. Please try again.';}
+})();

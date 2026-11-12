@@ -34,12 +34,15 @@ async function jsonBody(req){
  try{return JSON.parse((await body(req,1048576)).toString());}catch(e){if(e.status)throw e;throw fail('Invalid request.');}
 }
 export function createApp(config,provider=config.configured?createProvider(config):null){
- const sessions=new Map(),limits=new Map();
+ const sessions=new Map(),limits=new Map(),pending=new Map();
  const cookieName=config.secure?'__Host-mj_session':'mj_session';
- function prune(){const now=Date.now();for(const [key,s]of sessions)if(now>s.until||now-s.last>idleTtl)sessions.delete(key);for(const [key,l]of limits)if(now>l.until)limits.delete(key);}
+ const loginCookieName=config.secure?'__Host-mj_login':'mj_login';
+ function prune(){const now=Date.now();for(const [key,s]of sessions)if(now>s.until||now-s.last>idleTtl)sessions.delete(key);for(const [key,l]of limits)if(now>l.until)limits.delete(key);for(const [key,p]of pending)if(now>p.until)pending.delete(key);}
  function rate(req,scope,max){prune();const key=scope+':'+req.socket.remoteAddress;let l=limits.get(key);if(!l){l={until:Date.now()+600000,count:0};limits.set(key,l);}if(++l.count>max)throw fail('Too many attempts. Please wait ten minutes and try again.',429);}
  function sid(req){return (req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith(cookieName+'='))?.slice(cookieName.length+1);}
  function cookie(res,value,maxAge){res.setHeader('Set-Cookie',cookieName+'='+value+'; HttpOnly; SameSite=Strict; Path=/; Max-Age='+maxAge+(config.secure?'; Secure':''));}
+ function loginCookie(req){return (req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith(loginCookieName+'='))?.slice(loginCookieName.length+1);}
+ function pendingCookie(value,age){return loginCookieName+'='+value+'; HttpOnly; SameSite=Lax; Path=/; Max-Age='+age+(config.secure?'; Secure':'');}
  async function authorized(req,touch=true){prune();const id=sid(req),s=sessions.get(id);if(!s)throw fail('Please sign in to continue.',401);
   try{await provider.authenticate(s);}catch(e){sessions.delete(id);throw e;}
   if(touch)s.last=Date.now();return s;
@@ -62,7 +65,7 @@ export function createApp(config,provider=config.configured?createProvider(confi
   try{
    if(req.headers.host!==new URL(config.origin).host)throw fail('Invalid host.',403);
    const url=new URL(req.url,config.origin),route=url.pathname;
-   if(req.headers['sec-fetch-site']==='cross-site')throw fail('Cross-site request refused.',403);
+   if(req.headers['sec-fetch-site']==='cross-site'&&!(req.method==='GET'&&['/auth/callback','/login.html'].includes(route)))throw fail('Cross-site request refused.',403);
    if(!['GET','POST','PUT'].includes(req.method))throw fail('Method not allowed.',405);
    if(req.method!=='GET'&&req.headers.origin!==config.origin)throw fail('Request origin refused.',403);
    if(req.method==='GET'&&route==='/')return redirect(res);
@@ -76,21 +79,27 @@ export function createApp(config,provider=config.configured?createProvider(confi
     if(!config.configured)throw fail('Private sign-in is not connected yet.',503);
     rate(req,'send',5);const b=await jsonBody(req);
     if(typeof b.email!=='string'||b.email.length>254)throw fail('Enter your email address.');
-    if(b.email.trim().toLowerCase()===config.ownerEmail)await provider.requestCode(config.ownerEmail);
+    prune();if(pending.size>=64)throw fail('Too many pending sign-ins. Please try later.',429);
+    const previous=loginCookie(req);if(previous)pending.delete(previous);
+    const challenge=b.email.trim().toLowerCase()===config.ownerEmail?await provider.requestLink(config.ownerEmail,config.origin+'/auth/callback'):null;
+    const id=randomBytes(32).toString('hex');pending.set(id,{challenge,until:Date.now()+600000});
+    res.setHeader('Set-Cookie',pendingCookie(id,600));
     return json(res,200,{ok:true});
    }
-   if(req.method==='POST'&&route==='/api/auth/verify'){
+   if(req.method==='GET'&&route==='/auth/callback'){
     if(!config.configured)throw fail('Private sign-in is not connected yet.',503);
-    rate(req,'verify',10);const b=await jsonBody(req);
-    if(typeof b.email!=='string'||b.email.trim().toLowerCase()!==config.ownerEmail||typeof b.code!=='string'||!/^\d{6,10}$/.test(b.code))throw fail('The sign-in code is invalid or expired.',401);
-    const s=await provider.verifyCode(config.ownerEmail,b.code);
+    rate(req,'verify',10);prune();const pendingId=loginCookie(req),attempt=pending.get(pendingId),code=url.searchParams.get('code');
+    if(!attempt?.challenge||!code||code.length>2048)throw fail('This sign-in link must be opened in the browser that requested it. Please request a new link.',401);
+    pending.delete(pendingId);
+    const s=await attempt.challenge.finish(code);
     if(s.userId!==config.ownerId)throw fail('This account is not authorized.',403);
     await provider.authenticate(s);prune();
     if(sessions.size>=64)throw fail('Too many active sessions. Please try later.',429);
     const id=randomBytes(32).toString('hex');
     const old=sid(req);if(old)sessions.delete(old);
-    sessions.set(id,{...s,until:Date.now()+absoluteTtl,last:Date.now()});cookie(res,id,absoluteTtl/1000);
-    return json(res,200,{ok:true});
+    sessions.set(id,{...s,until:Date.now()+absoluteTtl,last:Date.now()});
+    res.setHeader('Set-Cookie',[cookieName+'='+id+'; HttpOnly; SameSite=Strict; Path=/; Max-Age='+absoluteTtl/1000+(config.secure?'; Secure':''),pendingCookie('',0)]);
+    res.writeHead(303,{Location:'/login.html'});return res.end();
    }
    if(req.method==='POST'&&route==='/api/auth/logout'){
     const id=sid(req),s=sessions.get(id);sessions.delete(id);cookie(res,'',0);

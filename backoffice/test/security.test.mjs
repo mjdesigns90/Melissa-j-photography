@@ -12,8 +12,8 @@ const config={origin:'http://127.0.0.1:4174',secure:false,configured:true,ownerI
 function setup(overrides={},settings={}){
  const calls={auth:0,load:0,upload:0,sent:0,saved:null};
  const provider={
-  requestCode:async()=>{calls.sent++;},
-  verifyCode:async()=>({access:'PRIVATE_ACCESS_TOKEN',refresh:'PRIVATE_REFRESH_TOKEN',expires:Date.now()+3600000,userId:owner}),
+  requestLink:async()=>{calls.sent++;return {finish:async code=>provider.finishLink(code)};},
+  finishLink:async()=>({access:'PRIVATE_ACCESS_TOKEN',refresh:'PRIVATE_REFRESH_TOKEN',expires:Date.now()+3600000,userId:owner}),
   authenticate:async()=>{calls.auth++;return {id:owner};},
   signOut:async()=>{},
   load:async()=>{calls.load++;return {revision:1,photos:seed()};},
@@ -29,7 +29,7 @@ function setup(overrides={},settings={}){
   const response={headers:{},status:200,headersSent:false,setHeader(k,v){this.headers[k.toLowerCase()]=v;},writeHead(status,h={}){this.status=status;this.headersSent=true;for(const[k,v]of Object.entries(h))this.setHeader(k,v);},end(b=''){this.body=Buffer.isBuffer(b)?b.toString():b;}};
   await app(req,response);return response;
  }
- async function login(){const r=await request('POST','/api/auth/verify',{email:'owner@example.test',code:'123456'});assert.equal(r.status,200);return r.headers['set-cookie'].split(';')[0];}
+ async function login(){const start=await request('POST','/api/auth/request',{email:'owner@example.test'});const r=await request('GET','/auth/callback?code=valid',undefined,start.headers['set-cookie'].split(';')[0]);assert.equal(r.status,303);return r.headers['set-cookie'][0].split(';')[0];}
  return {request,login,calls};
 }
 test('anonymous and forged sessions cannot read or mutate private resources',async()=>{
@@ -56,13 +56,15 @@ test('identity is verified again on private requests and revocation locks the se
 });
 test('opaque secure HttpOnly cookie keeps auth tokens out of browser responses',async()=>{
  const s=setup({}, {origin:'https://studio.example.test',secure:true});
- const r=await s.request('POST','/api/auth/verify',{email:'owner@example.test',code:'123456'});
- assert.equal(r.status,200);assert.match(r.headers['set-cookie'],/^__Host-mj_session=[a-f0-9]{64}; HttpOnly; SameSite=Strict; Path=\/; Max-Age=28800; Secure$/);
+ const start=await s.request('POST','/api/auth/request',{email:'owner@example.test'});
+ assert.match(start.headers['set-cookie'],/SameSite=Lax/);
+ const r=await s.request('GET','/auth/callback?code=valid',undefined,start.headers['set-cookie'].split(';')[0]);
+ assert.equal(r.status,303);assert.match(r.headers['set-cookie'][0],/^__Host-mj_session=[a-f0-9]{64}; HttpOnly; SameSite=Strict; Path=\/; Max-Age=28800; Secure$/);
  assert.doesNotMatch(r.body,/PRIVATE_/);assert.equal(r.headers['cache-control'],'no-store');assert.match(r.headers['content-security-policy'],/object-src 'none'/);
 });
-test('wrong owner UUID is refused even with a valid OTP',async()=>{
- const s=setup({verifyCode:async()=>({userId:randomUUID()})});
- assert.equal((await s.request('POST','/api/auth/verify',{email:'owner@example.test',code:'123456'})).status,403);
+test('wrong owner UUID is refused even with a valid link',async()=>{
+ const s=setup({finishLink:async()=>({userId:randomUUID()})}),start=await s.request('POST','/api/auth/request',{email:'owner@example.test'});
+ assert.equal((await s.request('GET','/auth/callback?code=valid',undefined,start.headers['set-cookie'].split(';')[0])).status,403);
 });
 test('email request responses do not reveal the owner allowlist',async()=>{
  const s=setup(),a=await s.request('POST','/api/auth/request',{email:'other@example.test'}),b=await s.request('POST','/api/auth/request',{email:'owner@example.test'});
@@ -123,4 +125,16 @@ test('migration contains private bucket, owner RLS and revision-guarded writes',
  assert.match(sql,/portfolio_assets enable row level security/);assert.match(sql,/portfolio_drafts enable row level security/);
  assert.match(sql,/revoke all on portfolio_private.owners from public, anon, authenticated/);assert.match(sql,/'portfolio-private','portfolio-private',false/);
  assert.match(sql,/revision=expected_revision/);assert.match(sql,/errcode='40001'/);
+});
+test('email links require the requesting browser, allow email navigation, and cannot be replayed',async()=>{
+ const s=setup(),start=await s.request('POST','/api/auth/request',{email:'owner@example.test'}),pending=start.headers['set-cookie'].split(';')[0];
+ assert.equal((await s.request('GET','/auth/callback?code=valid')).status,401);
+ assert.equal((await s.request('GET','/auth/callback?code=valid',undefined,'mj_login=forged')).status,401);
+ const r=await s.request('GET','/auth/callback?code=valid',undefined,pending,{'sec-fetch-site':'cross-site'});
+ assert.equal(r.status,303);assert.equal(r.headers.location,'/login.html');assert.equal(r.body,'');
+ assert.equal((await s.request('GET','/auth/callback?code=valid',undefined,pending)).status,401);
+});
+test('pending email links expire after ten minutes',async()=>{
+ const realNow=Date.now;let now=realNow();Date.now=()=>now;
+ try{const s=setup(),start=await s.request('POST','/api/auth/request',{email:'owner@example.test'});now+=601000;assert.equal((await s.request('GET','/auth/callback?code=valid',undefined,start.headers['set-cookie'].split(';')[0])).status,401);}finally{Date.now=realNow;}
 });
