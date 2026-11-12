@@ -2,14 +2,17 @@
 
 ## Current status
 
-Implemented and tested locally; **not connected to a Supabase project and not deployed**.
-No real email sign-in, cloud upload or cloud save has been claimed or performed.
+The Supabase project is connected and the private schema/storage migration has been
+applied and verified. The owner Auth account has not yet been created or linked;
+**real email sign-in, cloud uploads and cloud saves are not active or tested yet**.
+The back-office website is not deployed. No photographs have been uploaded.
 The existing local editor at port 4173 and the public photography site remain unchanged.
 The new backend preview is http://127.0.0.1:4174/login.html while its local process runs.
 It displays a connection-pending notice and does not offer a fake sign-in button.
 
-The next owner action is to install/connect the Supabase integration and sign in to
-an owner-controlled account. The authorized login email also needs to be confirmed.
+The owner has confirmed the intended sign-in email. The next owner action is to add
+that account in Supabase Authentication, so its Auth UUID can be enrolled by the
+trusted admin connection. Configuration remains local and outside the repository.
 Do not send passwords, one-time codes or service-role keys into chat.
 
 ## Implemented behavior
@@ -91,7 +94,7 @@ the real private service is connected. Do not overwrite existing drafts during s
 
 Run: node --test test/*.test.mjs
 
-Seventeen tests passed locally:
+Seventeen tests passed locally, including the updated private-function wrappers:
 
 - anonymous/forged sessions blocked from drafts, photos and private HTML;
 - owner UUID and database allowlist checks, revocation, logout and idle timeout;
@@ -106,6 +109,19 @@ The PostgreSQL tests are not hosted Supabase integration tests. Remote Auth, SMT
 Storage, RLS configuration and refresh-token behavior still require the actual account.
 The browser verified that requesting /manager.html without sign-in redirects to the
 connection-pending sign-in page. No fake authenticated browser preview is exposed.
+
+Hosted verification after applying the migration: private bucket flag is false; all
+three tables have RLS enabled; anonymous read/save grants are absent; direct client
+draft updates are denied. A transaction using the authenticated role and an unapproved
+UUID returned no drafts/assets, failed the owner check and was denied a draft save.
+No Auth users were fabricated in SQL. Public RPC wrappers are SECURITY INVOKER;
+privileged helpers live in the unexposed portfolio_private schema and check auth.uid().
+
+Advisors report no security warnings. Informational findings are expected: the private
+owners table deliberately has no client RLS policy/grants (only trusted admin enrollment),
+and the owner lookup index is unused before the application receives data.
+References: [deny-by-default RLS](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy),
+[unused index guidance](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index).
 
 Failed/interrupted multi-object uploads can leave private unreferenced files; they do
 not appear as saved draft items. Add a reviewed recovery/retention process before heavy

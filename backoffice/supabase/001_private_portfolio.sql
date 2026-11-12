@@ -2,15 +2,21 @@
 begin;
 create schema if not exists portfolio_private;
 revoke all on schema portfolio_private from public, anon, authenticated;
+grant usage on schema portfolio_private to authenticated;
 create table portfolio_private.owners (
   user_id uuid primary key references auth.users(id) on delete cascade
 );
 alter table portfolio_private.owners enable row level security;
 revoke all on portfolio_private.owners from public, anon, authenticated;
 
-create function public.is_portfolio_owner() returns boolean
+create function portfolio_private.is_portfolio_owner() returns boolean
 language sql stable security definer set search_path = ''
 as $$ select exists(select 1 from portfolio_private.owners where user_id = (select auth.uid())); $$;
+revoke all on function portfolio_private.is_portfolio_owner() from public, anon;
+grant execute on function portfolio_private.is_portfolio_owner() to authenticated;
+create function public.is_portfolio_owner() returns boolean
+language sql stable security invoker set search_path = ''
+as $$ select portfolio_private.is_portfolio_owner(); $$;
 revoke all on function public.is_portfolio_owner() from public, anon;
 grant execute on function public.is_portfolio_owner() to authenticated;
 
@@ -28,13 +34,14 @@ create table public.portfolio_assets (
  check(preview_key=owner_id::text || '/' || id::text || '/preview.webp'),
  check(original_key in (owner_id::text || '/' || id::text || '/original.jpg',owner_id::text || '/' || id::text || '/original.png',owner_id::text || '/' || id::text || '/original.webp'))
 );
+create index portfolio_assets_owner_id_idx on public.portfolio_assets(owner_id);
 alter table public.portfolio_assets enable row level security;
 revoke all on public.portfolio_assets from public, anon, authenticated;
 grant select, insert on public.portfolio_assets to authenticated;
 create policy asset_owner_read on public.portfolio_assets for select to authenticated
- using (public.is_portfolio_owner() and owner_id=(select auth.uid()));
+ using ((select public.is_portfolio_owner()) and owner_id=(select auth.uid()));
 create policy asset_owner_insert on public.portfolio_assets for insert to authenticated
- with check (public.is_portfolio_owner() and owner_id=(select auth.uid()));
+ with check ((select public.is_portfolio_owner()) and owner_id=(select auth.uid()));
 
 create table public.portfolio_drafts (
  owner_id uuid primary key references auth.users(id),
@@ -46,9 +53,9 @@ alter table public.portfolio_drafts enable row level security;
 revoke all on public.portfolio_drafts from public, anon, authenticated;
 grant select on public.portfolio_drafts to authenticated;
 create policy draft_owner_read on public.portfolio_drafts for select to authenticated
- using (public.is_portfolio_owner() and owner_id=(select auth.uid()));
+ using ((select public.is_portfolio_owner()) and owner_id=(select auth.uid()));
 
-create function public.save_portfolio_draft(expected_revision integer, draft_photos jsonb)
+create function portfolio_private.save_portfolio_draft(expected_revision integer, draft_photos jsonb)
 returns jsonb language plpgsql security definer set search_path = ''
 as $$
 declare saved public.portfolio_drafts;
@@ -66,15 +73,20 @@ begin
  if saved.owner_id is null then raise exception 'Draft conflict' using errcode='40001'; end if;
  return jsonb_build_object('revision',saved.revision,'updated_at',saved.updated_at);
 end; $$;
+revoke all on function portfolio_private.save_portfolio_draft(integer,jsonb) from public, anon;
+grant execute on function portfolio_private.save_portfolio_draft(integer,jsonb) to authenticated;
+create function public.save_portfolio_draft(expected_revision integer, draft_photos jsonb)
+returns jsonb language sql security invoker set search_path = ''
+as $$ select portfolio_private.save_portfolio_draft(expected_revision,draft_photos); $$;
 revoke all on function public.save_portfolio_draft(integer,jsonb) from public, anon;
 grant execute on function public.save_portfolio_draft(integer,jsonb) to authenticated;
 
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
  values('portfolio-private','portfolio-private',false,12582912,array['image/jpeg','image/png','image/webp']);
 create policy portfolio_private_read on storage.objects for select to authenticated
- using(bucket_id='portfolio-private' and public.is_portfolio_owner() and (storage.foldername(name))[1]=(select auth.uid())::text);
+ using(bucket_id='portfolio-private' and (select public.is_portfolio_owner()) and (storage.foldername(name))[1]=(select auth.uid())::text);
 create policy portfolio_private_insert on storage.objects for insert to authenticated
- with check(bucket_id='portfolio-private' and public.is_portfolio_owner() and (storage.foldername(name))[1]=(select auth.uid())::text);
+ with check(bucket_id='portfolio-private' and (select public.is_portfolio_owner()) and (storage.foldername(name))[1]=(select auth.uid())::text);
 -- No anonymous, update, delete, or public-read policies. Originals are immutable.
 commit;
 -- Owner enrollment is a separate trusted SQL/admin action, after creating the owner's
