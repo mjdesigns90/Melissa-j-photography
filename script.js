@@ -1,5 +1,7 @@
+const menuSignal = window.previewPageSignal;
 // Automatically keep the copyright year current.
-document.getElementById("year").textContent = new Date().getFullYear();
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
 
 // Some HTML preview hosts cannot serve the large original photo assets.
 // Keep local files first; recover with the identical, version-pinned originals.
@@ -24,6 +26,7 @@ if (navigation) {
     toggle.setAttribute("aria-expanded", "false");
   };
 
+  if (toggle && links) {
   navigation.classList.add("is-enhanced");
   toggle.hidden = false;
   toggle.addEventListener("click", () => {
@@ -39,13 +42,7 @@ if (navigation) {
       toggle.focus();
     }
   });
-  window.matchMedia("(max-width: 900px)").addEventListener("change", closeMenu);
+  window.matchMedia("(max-width: 900px)").addEventListener("change", closeMenu, { signal: menuSignal });
+  }
 }
 
-// Temporary Fine Art Prints link.
-// Replace the href="#" values in index.html when your shop URL is ready.
-function fineArtPlaceholder(event) {
-  event.preventDefault();
-  alert("Your Fine Art Prints shop link goes here! Replace the # link in index.html with your shop URL.");
-  return false;
-}

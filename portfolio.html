@@ -16,24 +16,16 @@
 
   <title>Portfolio | MJPhotography | Ocala, Florida</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+  
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
-    rel="stylesheet"
-  >
+  
 
-  <link rel="stylesheet" href="portfolio.css">
+  <link rel="stylesheet" href="portfolio.css?v=book-20261123">
 
+<link rel="canonical" href="https://melissajphotography.com/portfolio.html">
+  <link rel="stylesheet" href="nav.css?v=book-20261123">
 </head>
 
 <body>
@@ -41,34 +33,21 @@
 
   <!-- HEADER -->
 
-  <header class="site-header">
-
-    <a
-      href="index.html"
-      class="logo-link"
-      aria-label="MJPhotography home"
-    >
-      <img
-        src="images/mjphotography-logo.png"
-        alt="MJPhotography"
-        class="header-logo"
-      >
-    </a>
-
-    <nav class="top-nav">
-      <a href="index.html">Home</a>
-      <a href="#portfolio">Portfolio</a>
-
-      <a
-        href="https://unscriptedphotographers.com/mjphoto"
-        target="_blank"
-        rel="noopener"
-      >
-        Pricing & Booking
-      </a>
-    </nav>
-
-  </header>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-brand" href="index.html">MJPhotography</a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" hidden>
+        Menu <span aria-hidden="true">☰</span>
+      </button>
+      <ul class="site-nav-links" id="site-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="portfolio.html" aria-current="page">Portfolio</a></li>
+        <li><a class="site-nav-book" href="book.html">Book</a></li>
+        <li><a href="https://mjphotogramelissaheadshotsoc.shootproof.com">Event Galleries</a></li>
+      </ul>
+    </div>
+  </nav>
 
 
   <main>
@@ -397,13 +376,11 @@
       </h2>
 
       <p>
-        View session options, pricing and availability.
+        Tell me what you have in mind and start a session inquiry.
       </p>
 
       <a
-        href="https://unscriptedphotographers.com/mjphoto"
-        target="_blank"
-        rel="noopener"
+        href="book.html"
         class="portfolio-button"
       >
         Explore Sessions & Booking →
@@ -441,11 +418,9 @@
       </a>
 
       <a
-        href="https://unscriptedphotographers.com/mjphoto"
-        target="_blank"
-        rel="noopener"
+        href="book.html"
       >
-        Pricing & Booking
+        Request a Session
       </a>
 
       <a
@@ -465,5 +440,6 @@
   </footer>
 
 
+<script src="script.js?v=book-20261123"></script>
 </body>
 </html>

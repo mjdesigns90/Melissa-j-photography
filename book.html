@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore a session inquiry with MJPhotography in Ocala and Central Florida.">
+<title>Book a Session | MJPhotography</title>
+<link rel="stylesheet" href="book.css">
+<link rel="canonical" href="https://melissajphotography.com/book.html">
+  <link rel="stylesheet" href="nav.css">
+</head>
+<body>
+<nav class="site-nav" aria-label="Main navigation">
+    <div class="site-nav-inner">
+      <a class="site-nav-brand" href="index.html">MJPhotography</a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" hidden>
+        Menu <span aria-hidden="true">☰</span>
+      </button>
+      <ul class="site-nav-links" id="site-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a class="site-nav-book" href="book.html" aria-current="page">Book</a></li>
+        <li><a href="https://mjphotogramelissaheadshotsoc.shootproof.com">Event Galleries</a></li>
+      </ul>
+    </div>
+  </nav>
+<main class="booking">
+  <div class="booking-intro">
+    <p class="eyebrow">OCALA • CENTRAL FLORIDA</p>
+    <h1>Let’s plan your <em>session.</em></h1>
+    <p>Tell me what you have in mind. A request starts a conversation. It doesn’t reserve a date or commit you to a session.</p>
+    <a class="quiet-link" href="portfolio.html">Explore the portfolio</a>
+  </div>
+  <section class="request-panel" aria-labelledby="request-heading">
+    <p id="preview-notice" class="preview-note"><strong>Request only.</strong> This does not reserve a date or collect payment. Please don’t share sensitive information.</p>
+    <h2 id="request-heading">Start an inquiry</h2>
+    <form method="post" data-formspree-id="xjywpojb" id="inquiry-form" class="request-fields" aria-labelledby="request-heading" aria-describedby="preview-notice">
+      <label class="wide" for="service">What are you looking for?
+        <select id="service" name="session" required>
+          <option value="">Choose a session</option>
+          <option value="business">Headshots, branding &amp; business</option>
+          <option value="portraits">Family, couples &amp; maternity</option>
+          <option value="seniors">Senior portraits</option>
+          <option value="equine">Equine photography</option>
+          <option value="events">Event photography</option>
+          <option value="sports">Team sports</option>
+          <option value="other">Something else / I’m not sure</option>
+        </select>
+      </label>
+      <label for="client-name">Name
+        <input id="client-name" name="name" type="text" autocomplete="off" maxlength="120" placeholder="Sample Client" required>
+      </label>
+      <label for="client-email">Email
+        <input id="client-email" name="email" type="email" autocomplete="off" maxlength="254" placeholder="sample@example.com" required>
+      </label>
+      <label class="wide" for="preferred-date">Preferred date <small>(optional)</small>
+        <input id="preferred-date" name="preferred_date" type="date" autocomplete="off">
+      </label>
+      <label class="wide" for="details">What should I know about your session?
+        <textarea id="details" name="message" placeholder="Sample details: where, who, and what you’d love to capture." rows="4" maxlength="1200" required></textarea>
+      </label>
+      <div class="actions wide">
+        <button id="review-inquiry" type="submit" disabled>Send inquiry</button>
+        <button class="secondary" id="clear-inquiry" type="button" hidden>Clear</button>
+      </div>
+      <label hidden aria-hidden="true">Leave blank <input id="website" name="_gotcha" autocomplete="off" tabindex="-1"></label>
+    </form>
+    <p class="inquiry-privacy">Formspree processes and may retain the details you send so I can respond. It may also check submissions for spam. Read <a href="https://formspree.io/legal/privacy-policy/">Formspree’s privacy policy</a>.</p>
+    <p class="inquiry-fallback">Prefer email, or having trouble with the form? Write to <a href="mailto:bookings@melissajphotography.com">bookings@melissajphotography.com</a>.</p>
+    <p id="inquiry-status" role="status" aria-live="polite"></p>
+    <section id="inquiry-result" class="review" tabindex="-1" hidden aria-labelledby="review-heading">
+      <h2 id="review-heading">Inquiry received</h2>
+      <p>This is a request, not a confirmed reservation.</p>
+
+      <button type="button" class="secondary" id="edit-inquiry">Start another inquiry</button>
+    </section>
+    <noscript><p>JavaScript is off. Use the email link above to reach me.</p></noscript>
+  </section>
+</main>
+<footer class="booking-footer">MJPhotography · Ocala, Florida</footer>
+<script src="script.js"></script>
+<script src="book.js?v=direct-20261123"></script>
+</body>
+</html>
