@@ -48,10 +48,13 @@
           <option value="other">Something else / I’m not sure</option>
         </select>
       </label>
-      <label for="client-name">Name
-        <input id="client-name" name="name" type="text" autocomplete="off" maxlength="120" placeholder="Sample Client" required>
+      <label for="client-first-name">First name
+        <input id="client-first-name" name="first_name" type="text" autocomplete="given-name" maxlength="120" required>
       </label>
-      <label for="client-email">Email
+      <label for="client-last-name">Last name
+        <input id="client-last-name" name="last_name" type="text" autocomplete="family-name" maxlength="120" required>
+      </label>
+      <label class="wide" for="client-email">Email
         <input id="client-email" name="email" type="email" autocomplete="off" maxlength="254" placeholder="sample@example.com" required>
       </label>
       <label class="wide" for="preferred-date">Preferred date <small>(optional)</small>
@@ -80,6 +83,6 @@
 </main>
 <footer class="booking-footer">MJPhotography · Ocala, Florida</footer>
 <script src="script.js"></script>
-<script src="book.js?v=direct-20261123"></script>
+<script src="book-names.js"></script>
 </body>
 </html>
